@@ -1,0 +1,288 @@
+/* chatbot.css — fixed alignment + hide empty action boxes + visible Back button */
+/* Monochrome variant (white surfaces on black page) adjusted for alignment */
+
+:root {
+  --page-bg: #000000;
+  --surface: #ffffff;
+  --text: #000000;
+  --muted: rgba(0,0,0,0.45);
+  --border: rgba(0,0,0,0.10);
+  --glass: rgba(0,0,0,0.03);
+  --shadow: 0 10px 30px rgba(0,0,0,0.35);
+  --radius: 10px;
+}
+
+/* Reset */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body, .chat-page {
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  background: var(--page-bg);
+  min-height: 100vh;
+  color: var(--text);
+}
+
+/* Page container */
+.chat-page {
+  padding: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Card */
+.chat-card {
+  width: 100%;
+  max-width: 1100px;
+  background: var(--surface);
+  color: var(--text);
+  border-radius: calc(var(--radius) + 6px);
+  padding: 18px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+/* Header */
+.chat-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+/* Header left (title + subtitle) */
+.chat-header .left {
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+/* Title */
+.chat-header h1 {
+  margin:0;
+  font-size:20px;
+  font-weight:700;
+  color: var(--text);
+}
+
+/* Subtitle */
+.muted { color: var(--muted); font-size:13px; }
+
+/* Header actions: allow wrapping so Back button stays visible on small widths */
+.header-actions {
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap; /* important: allow wrapping on narrow screens */
+}
+
+/* Buttons (default) */
+.btn {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight:700;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+}
+
+/* Back button: higher priority style so it's clearly visible */
+.btn.back {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight:700;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+
+/* Settings row */
+.settings-row {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+  padding-bottom: 6px;
+}
+
+.setting label { display:block; font-weight:700; color:var(--text); margin-bottom:6px; font-size:13px; }
+.setting select, .setting input {
+  width:100%;
+  padding:10px 12px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size:14px;
+}
+.setting small { color: var(--muted); display:block; margin-top:6px; }
+
+/* Chat area */
+.chat-main { display:flex; flex-direction:column; gap:14px; margin-top:12px; }
+.messages {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 16px;
+  min-height: 300px;
+  max-height: 440px;
+  overflow:auto;
+  border: 1px solid var(--border);
+}
+
+/* Message rows */
+.message { display:flex; gap:12px; align-items:flex-start; margin-bottom:12px; }
+.message.user { justify-content:flex-end; }
+
+/* Avatar */
+.avatar {
+  width:40px;
+  height:40px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  flex-shrink:0;
+}
+
+/* Bubble */
+.bubble {
+  padding:10px 12px;
+  border-radius:10px;
+  max-width:74%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size:14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+}
+
+/* Bot/User subtle differences */
+.message.bot .bubble { background: var(--surface); }
+.message.user .bubble { background: var(--surface); }
+
+/* Internals */
+.msg-text { white-space:pre-wrap; margin-bottom:6px; color:var(--text); }
+.msg-row { display:flex; gap:8px; align-items:center; justify-content:space-between; margin-top:4px; }
+.badge { font-size:12px; color:var(--muted); padding:6px 8px; border-radius:8px; border:1px solid var(--border); background: var(--surface); }
+
+/* Composer area: fixed alignment and responsive layout */
+.composer {
+  display:grid;
+  grid-template-columns: 220px 1fr 220px;
+  gap: 12px;
+  align-items:start;
+  margin-top:10px;
+  padding-top:8px;
+  border-top: 1px solid var(--border);
+}
+
+/* Left column (mic + preview) */
+.left-col {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  align-items:flex-start;
+}
+
+/* Mic button */
+.mic-btn {
+  padding:10px 14px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-weight:800;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+
+/* Listening state (simple invert visual) */
+.mic-btn.listening {
+  background: #000000;
+  color: var(--surface);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+}
+
+/* Mic preview text */
+.mic-preview { font-size:13px; color:var(--muted); min-height:42px; display:flex; align-items:center; }
+
+/* Right column: input + actions (primary area) */
+.right-col {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+/* Make textarea full width inside right-col */
+textarea {
+  width:100%;
+  padding:12px 14px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  resize:none;
+  font-size:14px;
+  min-height:70px;
+  outline:none;
+}
+
+/* Third column: composer actions (right align) */
+.actions-col {
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  align-items:flex-end;
+  justify-content:flex-start;
+}
+
+/* Composer action buttons style */
+.composer-actions {
+  display:flex;
+  gap:8px;
+  align-items:center;
+  justify-content:flex-end;
+}
+
+/* Hide empty/placeholder buttons so 'extra boxes' gone */
+.composer-actions button:empty,
+.actions-col button:empty,
+.header-actions button:empty {
+  display: none !important;
+}
+
+/* Make sure Back button is visible on small screens */
+@media (max-width:920px) {
+  .composer { grid-template-columns: 140px 1fr 120px; }
+  .left-col { width: 100%; flex-direction:row; justify-content:space-between; align-items:center; }
+  .actions-col { align-items:flex-end; }
+  .chat-header { flex-direction:column; align-items:flex-start; gap:10px; }
+  .header-actions { width:100%; justify-content:flex-start; }
+}
+
+/* Narrow screens: stack composer vertically and keep everything tidy */
+@media (max-width:640px) {
+  .composer { grid-template-columns: 1fr; }
+  .left-col { width:100%; flex-direction:row; justify-content:space-between; }
+  .actions-col { width:100%; display:flex; justify-content:space-between; }
+  .right-col { order: 2; }
+  .left-col { order: 1; }
+}
+
+/* small footer note */
+.small { color: var(--muted); font-size:13px; text-align:center; margin-top:12px; }

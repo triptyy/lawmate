@@ -1,0 +1,119 @@
+/* Shared dark brown & black theme */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #0e0e0e; /* Deep black background */
+  color: #fff;
+}
+
+.login-wrapper, .signup-wrapper {
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(180deg, #1a1a1a, #2e1f12); /* black to dark brown */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.login-container, .signup-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  background: #18110c; /* deep dark brown */
+  border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.8);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+h2 {
+  color: #f4f1ec;
+  font-size: 32px;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+input {
+  padding: 14px;
+  border: 1px solid #3c2f26;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+  background: #100b08;
+  color: #f4f1ec;
+}
+
+input:focus {
+  border-color: #b38b59;
+  box-shadow: 0 0 8px rgba(179, 139, 89, 0.5);
+}
+
+button {
+  padding: 14px;
+  background-color: #b38b59; /* elegant brown gold */
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #cba46a;
+}
+
+.google-signin {
+  margin-top: 12px;
+  background-color: #100b08;
+  color: #f4f1ec;
+  border: 1px solid #3c2f26;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  padding: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.google-signin:hover {
+  background-color: #1c140f;
+}
+
+.google-signin img {
+  width: 22px;
+  height: 22px;
+}
+
+.error {
+  color: #ff7b72;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+p {
+  margin-top: 20px;
+  color: #c9b9a3;
+  font-size: 15px;
+}
+
+a {
+  color: #e3c08d;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

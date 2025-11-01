@@ -1,0 +1,313 @@
+/* RESET + GLOBAL */
+body, html, .desktop {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: black;
+  color: white;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* NAVIGATION BAR */
+.secondary-nav {
+  background: black;
+  padding: 15px 40px;
+  border-bottom: 2px solid #333;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-left,
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 24px; /* bigger spacing */
+}
+
+.nav-center {
+  text-align: center;
+}
+
+.logo {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0;
+  color: white;
+}
+
+.logo-subtitle {
+  color: white;
+  font-size: 0.8rem;
+  margin: 5px 0 0 0;
+  font-weight: normal;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  background: #333;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* Highlight Signup */
+.signup-link {
+  background: #b87333;
+  color: white !important;
+  font-weight: bold;
+}
+
+.signup-link:hover {
+  background: #965c28;
+  transform: scale(1.05);
+}
+
+/* HERO BANNER */
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: 90vh; /* fullscreen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.hero-cta {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: #fff;
+}
+
+.hero-cta h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+/* CTA BUTTONS */
+.cta {
+  background: #b87333;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.cta:hover {
+  background: #965c28;
+}
+
+/* FEATURES SECTION */
+.features {
+  display: flex;
+  justify-content: space-around;
+  padding: 60px 20px;
+  background: #1e1e1e;
+}
+
+.feature {
+  text-align: center;
+  max-width: 300px;
+}
+
+.feature img {
+  width: 80px;
+  margin-bottom: 15px;
+}
+
+.feature h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.feature p {
+  font-size: 1rem;
+  color: #d3d3d3;
+}
+
+/* CONTACT SECTION */
+.contact {
+  background: white;
+  color: black;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.contact h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+}
+
+.contact-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.contact-card {
+  background: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  width: 250px;
+}
+
+.contact-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+/* LOGO CAROUSEL */
+.carousel-section {
+  background: black;
+  padding: 80px 20px;
+  text-align: center;
+  overflow: hidden;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.carousel-title {
+  font-size: 3rem;
+  color: white;
+  margin-bottom: 50px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.carousel-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-track {
+  display: flex;
+  animation: carouselScroll 20s linear infinite;
+  width: max-content;
+}
+
+.carousel-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 30px;
+  min-width: 200px;
+  transition: transform 0.3s ease;
+}
+
+.carousel-item:hover {
+  transform: scale(1.05);
+}
+
+.carousel-item img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  background: #2d2d2d;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-item span {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.carousel-item p {
+  color: #d3d3d3;
+  font-size: 0.9rem;
+  text-align: center;
+  line-height: 1.4;
+  max-width: 180px;
+  margin: 0;
+}
+
+@keyframes carouselScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.carousel-container:hover .carousel-track {
+  animation-play-state: paused;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .carousel-item {
+    margin: 0 20px;
+    min-width: 120px;
+  }
+  
+  .carousel-item img {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .carousel-title {
+    font-size: 2rem;
+  }
+
+  .secondary-nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hero-banner {
+    height: 60vh;
+  }
+
+  .hero-cta h2 {
+    font-size: 1.8rem;
+  }
+}
