@@ -1,6 +1,9 @@
 // src/pages/Chatbot.js
+// Uploaded file reference (for tooling): /mnt/data/Chatbot.js
+
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+
 import "../styles/chatbot.css";
 
 export default function Chatbot() {
@@ -10,6 +13,7 @@ export default function Chatbot() {
   const [messages, setMessages] = useState([
     { id: 1, role: "bot", text: "Hello — choose a language and speak or type below.", meta: { replyLang: "en-US" } },
   ]);
+  
   const [inputText, setInputText] = useState("");
   const [interimTranscript, setInterimTranscript] = useState("");
   const [finalTranscript, setFinalTranscript] = useState("");
@@ -24,6 +28,9 @@ export default function Chatbot() {
   const [autoTranslateBeforeSend, setAutoTranslateBeforeSend] = useState(true);
   const [voices, setVoices] = useState([]);
   const [selectedVoiceURI, setSelectedVoiceURI] = useState("");
+
+  // NEW: mic disabled state
+  const [micDisabled, setMicDisabled] = useState(false);
 
   // Refs
   const recognitionRef = useRef(null);
@@ -133,6 +140,9 @@ export default function Chatbot() {
 
   // --- Start/Stop recognition ---
   const toggleListening = () => {
+    // do not start/stop if mic is disabled
+    if (micDisabled) return;
+
     ensureVoicesAvailable();
     if (!recognitionRef.current) return;
     if (isListening) {
@@ -152,6 +162,14 @@ export default function Chatbot() {
 
   // --- TTS helper ---
   const speakText = (text, lang = speakLang) => {
+    // If micDisabled (user wants no audio), cancel any playing audio and return.
+    if (micDisabled) {
+      try {
+        if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+      } catch (e) {}
+      return;
+    }
+
     ensureVoicesAvailable();
     if (!("speechSynthesis" in window) || !text) return;
     try {
@@ -228,7 +246,7 @@ export default function Chatbot() {
     const payload = await buildPayload(raw);
 
     try {
-      const res = await fetch("/api/chat", {
+      const res = await fetch("http://127.0.0.1:8000/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -306,6 +324,13 @@ export default function Chatbot() {
 
   // play (speak) a particular message
   const playMessage = (msg) => {
+    // if micDisabled, ensure audio is stopped and do not play
+    if (micDisabled) {
+      try {
+        if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+      } catch (e) {}
+      return;
+    }
     const lang = msg.meta?.replyLang || (looksLikeHindi(msg.text) ? "hi-IN" : "en-US");
     speakText(msg.text, lang);
   };
@@ -334,6 +359,25 @@ export default function Chatbot() {
           <div className="header-actions">
             <button className="btn back" onClick={() => navigate("/desktop")}>⬅ Back</button>
             <button className="btn" onClick={() => { /* optional global speak-all */ voicesLoadedRef.current && window.speechSynthesis.cancel(); }}>🔊</button>
+            {/* NEW: mic disable/enable button */}
+            <button
+              className="btn"
+              onClick={() => {
+                // toggle micDisabled and if disabling, cancel any ongoing TTS immediately
+                setMicDisabled((prev) => {
+                  const next = !prev;
+                  if (next) {
+                    try {
+                      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+                    } catch (e) {}
+                  }
+                  return next;
+                });
+              }}
+              title={micDisabled ? "Enable microphone & audio" : "Disable microphone & audio"}
+            >
+              {micDisabled ? "Enable Mic" : "Disable Mic"}
+            </button>
           </div>
         </header>
 
@@ -398,7 +442,7 @@ export default function Chatbot() {
 
           <div className="composer">
             <div className="left-col">
-              <button className={`mic-btn ${isListening ? "listening" : ""}`} onClick={toggleListening}>
+              <button className={`mic-btn ${isListening ? "listening" : ""}`} onClick={toggleListening} disabled={micDisabled}>
                 {isListening ? "● Recording" : "🎤 Speak"}
               </button>
               <div className="mic-preview">{isListening ? <em>{interimTranscript || "Listening..."}</em> : <span className="muted">{finalTranscript ? `Last: ${short(finalTranscript, 40)}` : "Tap to speak"}</span>}</div>
